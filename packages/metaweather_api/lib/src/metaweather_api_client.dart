@@ -21,7 +21,7 @@ class MetaWeatherApiClient extends WeatherService {
   }
 
   @override
-  Future<ForecastResponse> forecastForLocation(String locationId) async {
+  Future<ForecastResponse> forecastForLocation(int locationId) async {
     final url = Uri.https(_baseUrl, '/api/location/$locationId');
 
     final response = await _httpClient.get(url);

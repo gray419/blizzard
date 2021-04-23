@@ -8,6 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  weather_repository:
+    path: packages/weather_repository
 
 dev_dependencies:
   flutter_test:

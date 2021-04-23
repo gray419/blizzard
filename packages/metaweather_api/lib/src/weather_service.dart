@@ -5,5 +5,5 @@ import 'package:metaweather_api/models/location_response.dart';
 
 abstract class WeatherService {
   Future<LocationResponse> searchForLocation(String term);
-  Future<ForecastResponse> forecastForLocation(String locationId);
+  Future<ForecastResponse> forecastForLocation(int locationId);
 }
