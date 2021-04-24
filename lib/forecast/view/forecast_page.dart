@@ -1,5 +1,4 @@
 import 'package:blizzard/forecast/bloc/forecast_cubit.dart';
-import 'package:blizzard/forecast/widgets/temperature_units.dart';
 import 'package:blizzard/forecast/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
