@@ -14,10 +14,14 @@ void main() {
   group('ForecastPage', () {
     late WeatherRepository weatherRepository;
     final locationId = 1;
-    final forecast = Forecast('Nyc', [
-      Weather(DateTime.now(), 10, 10, 10, 'Cloudy', 'C'),
-      Weather(DateTime.now(), 10, 10, 10, 'Cloudy', 'C'),
-    ]);
+    final forecast = Forecast(
+      locationName: 'Nyc',
+      locationId: 1,
+      weather: [
+        Weather(DateTime.now(), 10, 10, 10, 'Cloudy', 'C'),
+        Weather(DateTime.now(), 10, 10, 10, 'Cloudy', 'C'),
+      ],
+    );
 
     setUp(() {
       weatherRepository = MockWeatherRepository();

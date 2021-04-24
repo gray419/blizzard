@@ -10,15 +10,21 @@ class ForecastState extends Equatable {
   const ForecastState._({
     this.status = ForecastStatus.initial,
     this.isCelsius = true,
-    this.forecast = const Forecast('', []),
+    this.forecast =
+        const Forecast(locationName: '', locationId: 0, weather: []),
   });
 
   const ForecastState.initial() : this._();
 
-  const ForecastState.loading() : this._(status: ForecastStatus.loading);
+  const ForecastState.loading(bool isCelsius)
+      : this._(status: ForecastStatus.loading, isCelsius: isCelsius);
 
-  const ForecastState.success(Forecast forecast)
-      : this._(status: ForecastStatus.success, forecast: forecast);
+  const ForecastState.success(Forecast forecast, bool isCelsius)
+      : this._(
+          status: ForecastStatus.success,
+          forecast: forecast,
+          isCelsius: isCelsius,
+        );
 
   const ForecastState.failure() : this._(status: ForecastStatus.failure);
 

@@ -67,7 +67,19 @@ class _ForecastSuccess extends StatelessWidget {
           TodaysWeather(
             forecast: state.forecast,
           ),
-          TemperatureUnits(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TemperatureUnits(),
+              IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: () {
+                    context
+                        .read<ForecastCubit>()
+                        .refreshForecast(state.forecast.locationId);
+                  })
+            ],
+          ),
           const SizedBox(height: 24),
           ForecastResults(
             forecast: state.forecast,
