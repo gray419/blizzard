@@ -2,6 +2,10 @@ import 'package:blizzard/forecast/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ForecastPage extends StatelessWidget {
+  final int locationId;
+
+  const ForecastPage({Key? key, required this.locationId}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

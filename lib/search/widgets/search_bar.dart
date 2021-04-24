@@ -4,10 +4,10 @@ import 'package:flutter/widgets.dart';
 class SearchBar extends StatelessWidget {
   SearchBar({
     Key? key,
-    this.onChanged,
+    this.onSubmitted,
   }) : super(key: key);
 
-  final ValueSetter<String>? onChanged;
+  final ValueSetter<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class SearchBar extends StatelessWidget {
         ),
         hintText: 'Search for your city',
       ),
-      onChanged: onChanged,
+      onSubmitted: onSubmitted,
     );
   }
 }

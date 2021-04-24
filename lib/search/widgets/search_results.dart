@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:weather_repository/weather_repository.dart';
 
 class SearchResults extends StatelessWidget {
-  const SearchResults({
-    Key? key,
-    this.onTap,
-  }) : super(key: key);
+  final ValueSetter<int>? onTap;
+  final List<Location> locations;
 
-  final ValueSetter<String>? onTap;
+  SearchResults({Key? key, this.onTap, this.locations = const []})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: 5,
+      itemCount: locations.length,
       itemBuilder: (context, index) => _SearchResult(
-        city: 'New York',
-        onTap: () => onTap?.call('New York'),
+        city: locations[index].name,
+        onTap: () => onTap?.call(locations[index].id),
       ),
     );
   }
@@ -33,10 +33,6 @@ class _SearchResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      visualDensity: VisualDensity.compact,
-      title: Text(city),
-      onTap: onTap,
-    );
+    return ListTile(title: Text(city), onTap: onTap);
   }
 }
