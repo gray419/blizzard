@@ -41,5 +41,29 @@ void main() {
         expect(find.byType(ListTile), findsOneWidget);
       });
     });
+
+    group('errors', () {
+      setUp(() {
+        weatherRepository = MockWeatherRepository();
+        when(() => weatherRepository.forecastForLocation(locationId))
+            .thenThrow((_) => Exception('error'));
+      });
+
+      testWidgets('renders ForecastPage error view', (tester) async {
+        mockNetworkImagesFor(() async {
+          await tester.pumpWidget(RepositoryProvider.value(
+            value: weatherRepository,
+            child: MaterialApp(
+              home: ForecastPage(
+                locationId: 1,
+              ),
+            ),
+          ));
+          await tester.pumpAndSettle();
+          expect(find.byType(ForecastFrame), findsOneWidget);
+          expect(find.text('Error fetching the forecast'), findsOneWidget);
+        });
+      });
+    });
   });
 }
