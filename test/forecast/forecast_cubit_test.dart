@@ -140,7 +140,7 @@ void main() {
       );
 
       blocTest<ForecastCubit, ForecastState>(
-        'emits loading, error when refresh erros',
+        'emits loading, error when refresh errosr',
         build: () {
           when(() => weatherRepository.forecastForLocation(locationId))
               .thenThrow((_) => Exception('Error'));

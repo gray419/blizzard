@@ -1,3 +1,5 @@
+import 'package:blizzard/forecast/view/forecast_page.dart';
+import 'package:blizzard/search/bloc/search_cubit.dart';
 import 'package:blizzard/search/view/search_page.dart';
 import 'package:blizzard/search/widgets/search_results.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +10,19 @@ import 'package:weather_repository/weather_repository.dart';
 
 class MockWeatherRepository extends Mock implements WeatherRepository {}
 
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
+class MockSearchCubit extends Mock implements SearchCubit {}
+
 void main() {
   group('SearchPage', () {
     final term = 'nyc';
     final location = Location(1, ' New York');
     late WeatherRepository weatherRepository;
+    late SearchCubit searchCubit;
 
     setUp(() {
+      searchCubit = MockSearchCubit();
       weatherRepository = MockWeatherRepository();
       when(() => weatherRepository.searchForLocation(term: term))
           .thenAnswer((_) => Future.value([location]));
@@ -67,6 +75,30 @@ void main() {
         await tester.testTextInput.receiveAction(TextInputAction.done);
         await tester.pumpAndSettle();
         expect(find.text('Error searching for that location'), findsOneWidget);
+      });
+    });
+
+    group('navigation', () {
+      testWidgets('tapping tile takes you to ForecastPage',
+          (WidgetTester tester) async {
+        final mockObserver = MockNavigatorObserver();
+        await tester.pumpWidget(RepositoryProvider.value(
+          value: weatherRepository,
+          child: MaterialApp(
+            home: SearchPage(),
+            navigatorObservers: [mockObserver],
+          ),
+        ));
+        await tester.pumpAndSettle();
+        await tester.enterText(find.byKey(Key('searchBar_textField')), 'nyc');
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.byType(ListTile));
+        await tester.pumpAndSettle();
+
+        // verify(mockObserver.didPush(any(), any()));
+        expect(find.byType(ForecastPage), findsOneWidget);
       });
     });
   });
