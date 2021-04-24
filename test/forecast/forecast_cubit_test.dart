@@ -112,13 +112,6 @@ void main() {
           Weather(date, 10.0, 10.0, 10.0, 'Cloudy', 'C'),
         ],
       );
-      final forecastFahrenheit = Forecast(
-        locationName: 'Nyc',
-        locationId: 1,
-        weather: [
-          Weather(date, 50.0, 50.0, 50.0, 'Cloudy', 'C'),
-        ],
-      );
       late WeatherRepository weatherRepository;
 
       setUp(() {
