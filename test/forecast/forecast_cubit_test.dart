@@ -138,6 +138,20 @@ void main() {
           ForecastState.success(forecast, true),
         ],
       );
+
+      blocTest<ForecastCubit, ForecastState>(
+        'emits loading, error when refresh errosr',
+        build: () {
+          when(() => weatherRepository.forecastForLocation(locationId))
+              .thenThrow((_) => Exception('Error'));
+          return ForecastCubit(weatherRepository);
+        },
+        act: (cubit) => cubit.refreshForecast(locationId),
+        expect: () => <ForecastState>[
+          ForecastState.loading(true),
+          ForecastState.failure(),
+        ],
+      );
     });
   });
 }
