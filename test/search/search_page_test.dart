@@ -12,8 +12,6 @@ class MockWeatherRepository extends Mock implements WeatherRepository {}
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
-class MockSearchCubit extends Mock implements SearchCubit {}
-
 void main() {
   group('SearchPage', () {
     final term = 'nyc';
