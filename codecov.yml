@@ -1,0 +1,11 @@
+# When changing this file, please use
+# curl --data-binary @codecov.yml https://codecov.io/validate
+# to check it for validity.
+
+coverage:
+  status:
+    project:
+      default:
+        target: 35%
+        threshold: 1%
+    patch: false
