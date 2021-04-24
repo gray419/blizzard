@@ -1,4 +1,5 @@
 import 'package:blizzard/forecast/bloc/forecast_cubit.dart';
+import 'package:blizzard/forecast/widgets/temperature_units.dart';
 import 'package:blizzard/forecast/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +38,7 @@ class ForecastFrame extends StatelessWidget {
             );
           case ForecastStatus.success:
             return _ForecastSuccess(
-              forecast: state.forecast,
+              state: state,
             );
           case ForecastStatus.failure:
             return Center(
@@ -52,9 +53,9 @@ class ForecastFrame extends StatelessWidget {
 }
 
 class _ForecastSuccess extends StatelessWidget {
-  final Forecast forecast;
+  final ForecastState state;
 
-  const _ForecastSuccess({Key? key, required this.forecast}) : super(key: key);
+  const _ForecastSuccess({Key? key, required this.state}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +66,12 @@ class _ForecastSuccess extends StatelessWidget {
         children: [
           const SizedBox(height: 16),
           TodaysWeather(
-            forecast: forecast,
+            forecast: state.forecast,
           ),
-          const SizedBox(height: 32),
+          TemperatureUnits(),
+          const SizedBox(height: 24),
           ForecastResults(
-            forecast: forecast,
+            forecast: state.forecast,
           )
         ],
       ),

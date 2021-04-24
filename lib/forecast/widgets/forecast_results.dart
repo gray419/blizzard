@@ -40,15 +40,15 @@ class _ForecastResult extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '${weather.maxTemp}\u00b0',
-            style: TextStyle(fontSize: 18),
+            '${weather.maxTemp.round()}\u00b0',
+            style: TextStyle(fontSize: 16),
           ),
           SizedBox(
             width: 8,
           ),
           Text(
-            '${weather.minTemp}\u00b0',
-            style: TextStyle(fontSize: 18),
+            '${weather.minTemp.round()}\u00b0',
+            style: TextStyle(fontSize: 16),
           ),
         ],
       ),

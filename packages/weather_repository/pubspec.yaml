@@ -9,6 +9,7 @@ environment:
 dependencies:
   metaweather_api:
       path: ../metaweather_api
+  equatable: ^2.0.0
 
 dev_dependencies:
   pedantic: ^1.11.0
