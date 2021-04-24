@@ -1,4 +1,5 @@
 import 'package:blizzard/forecast/view/forecast_page.dart';
+import 'package:blizzard/forecast/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,9 +11,15 @@ class MockWeatherRepository extends Mock implements WeatherRepository {}
 void main() {
   group('ForecastPage', () {
     late WeatherRepository weatherRepository;
+    final locationId = 1;
+    final forecast = Forecast('Nyc', [
+      Weather(DateTime.now(), 10, 10, 10, 'Cloudy', 'C'),
+    ]);
 
     setUp(() {
       weatherRepository = MockWeatherRepository();
+      when(() => weatherRepository.forecastForLocation(locationId))
+          .thenAnswer((_) => Future.value(forecast));
     });
 
     testWidgets('renders ForecastPage', (tester) async {
@@ -26,6 +33,8 @@ void main() {
       ));
       await tester.pumpAndSettle();
       expect(find.byType(ForecastFrame), findsOneWidget);
+      expect(find.byType(TodaysWeather), findsOneWidget);
+      expect(find.byType(ForecastResults), findsOneWidget);
     });
   });
 }
