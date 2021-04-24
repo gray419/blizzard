@@ -25,7 +25,7 @@ void main() {
 
     setUp(() {
       weatherRepository = MockWeatherRepository();
-      when(() => weatherRepository.forecastForLocation(locationId))
+      when(() => weatherRepository.forecastForLocation(locationId: locationId))
           .thenAnswer((_) => Future.value(forecast));
     });
 
@@ -51,7 +51,8 @@ void main() {
     group('errors', () {
       setUp(() {
         weatherRepository = MockWeatherRepository();
-        when(() => weatherRepository.forecastForLocation(locationId))
+        when(() =>
+                weatherRepository.forecastForLocation(locationId: locationId))
             .thenThrow((_) => Exception('error'));
       });
 

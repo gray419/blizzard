@@ -13,7 +13,8 @@ class ForecastCubit extends Cubit<ForecastState> {
   Future<void> fetchForecast(int locationId) async {
     emit(ForecastState.loading(state.isCelsius));
     try {
-      final forecast = await _weatherRepository.forecastForLocation(locationId);
+      final forecast =
+          await _weatherRepository.forecastForLocation(locationId: locationId);
       emit(ForecastState.success(forecast, state.isCelsius));
     } catch (e) {
       emit(ForecastState.failure());
@@ -23,7 +24,8 @@ class ForecastCubit extends Cubit<ForecastState> {
   Future<void> refreshForecast(int locationId) async {
     emit(ForecastState.loading(state.isCelsius));
     try {
-      final forecast = await _weatherRepository.forecastForLocation(locationId);
+      final forecast =
+          await _weatherRepository.forecastForLocation(locationId: locationId);
       final weather = state.isCelsius
           ? forecast.weather
           : _convertTemperature(forecast.weather, state.isCelsius);

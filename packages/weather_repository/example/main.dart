@@ -14,7 +14,8 @@ void main() async {
     final location = locations.first;
     print('${location.name}');
 
-    final forecast = await repository.forecastForLocation(location.id);
+    final forecast =
+        await repository.forecastForLocation(locationId: location.id);
     if (forecast.weather.length == 0) {
       print('No Weather Forecast Found');
       return;
