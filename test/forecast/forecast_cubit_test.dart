@@ -28,7 +28,8 @@ void main() {
 
       setUp(() {
         weatherRepository = MockWeatherRepository();
-        when(() => weatherRepository.forecastForLocation(locationId))
+        when(() =>
+                weatherRepository.forecastForLocation(locationId: locationId))
             .thenAnswer((_) => Future.value(forecast));
       });
 
@@ -37,7 +38,7 @@ void main() {
         build: () => ForecastCubit(weatherRepository),
         act: (cubit) => cubit.fetchForecast(locationId),
         verify: (_) => verify(
-          () => weatherRepository.forecastForLocation(locationId),
+          () => weatherRepository.forecastForLocation(locationId: locationId),
         ).called(1),
       );
 
@@ -54,7 +55,8 @@ void main() {
       blocTest<ForecastCubit, ForecastState>(
         'emits loading, error when searchForLocation throws',
         build: () {
-          when(() => weatherRepository.forecastForLocation(locationId))
+          when(() =>
+                  weatherRepository.forecastForLocation(locationId: locationId))
               .thenThrow((_) => Exception('Error'));
           return ForecastCubit(weatherRepository);
         },
@@ -87,7 +89,8 @@ void main() {
 
       setUp(() {
         weatherRepository = MockWeatherRepository();
-        when(() => weatherRepository.forecastForLocation(locationId))
+        when(() =>
+                weatherRepository.forecastForLocation(locationId: locationId))
             .thenAnswer((_) => Future.value(forecast));
       });
 
@@ -116,7 +119,8 @@ void main() {
 
       setUp(() {
         weatherRepository = MockWeatherRepository();
-        when(() => weatherRepository.forecastForLocation(locationId))
+        when(() =>
+                weatherRepository.forecastForLocation(locationId: locationId))
             .thenAnswer((_) => Future.value(forecast));
       });
 
@@ -125,7 +129,7 @@ void main() {
         build: () => ForecastCubit(weatherRepository),
         act: (cubit) => cubit.refreshForecast(locationId),
         verify: (_) => verify(
-          () => weatherRepository.forecastForLocation(locationId),
+          () => weatherRepository.forecastForLocation(locationId: locationId),
         ).called(1),
       );
 
@@ -142,7 +146,8 @@ void main() {
       blocTest<ForecastCubit, ForecastState>(
         'emits loading, error when refresh errosr',
         build: () {
-          when(() => weatherRepository.forecastForLocation(locationId))
+          when(() =>
+                  weatherRepository.forecastForLocation(locationId: locationId))
               .thenThrow((_) => Exception('Error'));
           return ForecastCubit(weatherRepository);
         },
