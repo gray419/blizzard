@@ -11,10 +11,32 @@ class ForecastCubit extends Cubit<ForecastState> {
   ForecastCubit(this._weatherRepository) : super(ForecastState.initial());
 
   Future<void> fetchForecast(int locationId) async {
-    emit(ForecastState.loading());
+    emit(ForecastState.loading(state.isCelsius));
     try {
       final forecast = await _weatherRepository.forecastForLocation(locationId);
-      emit(ForecastState.success(forecast));
+      emit(ForecastState.success(forecast, state.isCelsius));
+    } catch (e) {
+      emit(ForecastState.failure());
+    }
+  }
+
+  Future<void> refreshForecast(int locationId) async {
+    emit(ForecastState.loading(state.isCelsius));
+    try {
+      final forecast = await _weatherRepository.forecastForLocation(locationId);
+      final weather = state.isCelsius
+          ? forecast.weather
+          : _convertTemperature(forecast.weather, state.isCelsius);
+      emit(
+        ForecastState._(
+          status: ForecastStatus.success,
+          isCelsius: state.isCelsius,
+          forecast: Forecast(
+              locationName: forecast.locationName,
+              weather: weather,
+              locationId: forecast.locationId),
+        ),
+      );
     } catch (e) {
       emit(ForecastState.failure());
     }
@@ -22,8 +44,23 @@ class ForecastCubit extends Cubit<ForecastState> {
 
   Future<void> switchUnits() async {
     final isCelsius = !state.isCelsius;
+    final convertedWeatherUnits =
+        _convertTemperature(state.forecast.weather, isCelsius);
+    emit(
+      state.copyWith(
+        isCelsius: isCelsius,
+        forecast: Forecast(
+          locationName: state.forecast.locationName,
+          locationId: state.forecast.locationId,
+          weather: convertedWeatherUnits,
+        ),
+      ),
+    );
+  }
+
+  List<Weather> _convertTemperature(List<Weather> weather, bool isCelsius) {
     var convertedWeatherUnits = <Weather>[];
-    state.forecast.weather.forEach(
+    weather.forEach(
       (element) {
         convertedWeatherUnits.add(
           element.copyWith(
@@ -40,11 +77,6 @@ class ForecastCubit extends Cubit<ForecastState> {
         );
       },
     );
-    emit(
-      state.copyWith(
-        isCelsius: isCelsius,
-        forecast: Forecast(state.forecast.locationName, convertedWeatherUnits),
-      ),
-    );
+    return convertedWeatherUnits;
   }
 }

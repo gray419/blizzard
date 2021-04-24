@@ -17,9 +17,13 @@ void main() {
 
     group('search for location', () {
       final locationId = 1;
-      final forecast = Forecast('Nyc', [
-        Weather(DateTime.now(), 10, 10, 10, 'Cloudy', 'C'),
-      ]);
+      final forecast = Forecast(
+        locationName: 'Nyc',
+        locationId: 1,
+        weather: [
+          Weather(DateTime.now(), 10, 10, 10, 'Cloudy', 'C'),
+        ],
+      );
       late WeatherRepository weatherRepository;
 
       setUp(() {
@@ -42,8 +46,8 @@ void main() {
         build: () => ForecastCubit(weatherRepository),
         act: (cubit) => cubit.fetchForecast(locationId),
         expect: () => <ForecastState>[
-          ForecastState.loading(),
-          ForecastState.success(forecast),
+          ForecastState.loading(true),
+          ForecastState.success(forecast, true),
         ],
       );
 
@@ -56,7 +60,7 @@ void main() {
         },
         act: (cubit) => cubit.fetchForecast(locationId),
         expect: () => const <ForecastState>[
-          ForecastState.loading(),
+          ForecastState.loading(true),
           ForecastState.failure()
         ],
       );
@@ -65,12 +69,20 @@ void main() {
     group('switch units', () {
       final locationId = 1;
       final date = DateTime.now();
-      final forecast = Forecast('Nyc', [
-        Weather(date, 10.0, 10.0, 10.0, 'Cloudy', 'C'),
-      ]);
-      final forecastFahrenheit = Forecast('Nyc', [
-        Weather(date, 50.0, 50.0, 50.0, 'Cloudy', 'C'),
-      ]);
+      final forecast = Forecast(
+        locationName: 'Nyc',
+        locationId: 1,
+        weather: [
+          Weather(date, 10.0, 10.0, 10.0, 'Cloudy', 'C'),
+        ],
+      );
+      final forecastFahrenheit = Forecast(
+        locationName: 'Nyc',
+        locationId: 1,
+        weather: [
+          Weather(date, 50.0, 50.0, 50.0, 'Cloudy', 'C'),
+        ],
+      );
       late WeatherRepository weatherRepository;
 
       setUp(() {
@@ -80,12 +92,50 @@ void main() {
       });
 
       blocTest<ForecastCubit, ForecastState>(
-        'invoke switchUnits on repository',
+        'emits ForecastState success',
         build: () => ForecastCubit(weatherRepository),
-        seed: () => ForecastState.success(forecast),
+        seed: () => ForecastState.success(forecast, true),
         act: (cubit) => cubit.switchUnits(),
         expect: () => <ForecastState>[
-          ForecastState.success(forecastFahrenheit),
+          ForecastState.success(forecastFahrenheit, false),
+        ],
+      );
+    });
+
+    group('refresh', () {
+      final locationId = 1;
+      final date = DateTime.now();
+      final forecast = Forecast(
+        locationName: 'Nyc',
+        locationId: 1,
+        weather: [
+          Weather(date, 10.0, 10.0, 10.0, 'Cloudy', 'C'),
+        ],
+      );
+      late WeatherRepository weatherRepository;
+
+      setUp(() {
+        weatherRepository = MockWeatherRepository();
+        when(() => weatherRepository.forecastForLocation(locationId))
+            .thenAnswer((_) => Future.value(forecast));
+      });
+
+      blocTest<ForecastCubit, ForecastState>(
+        'invoke searchForLocation on repository',
+        build: () => ForecastCubit(weatherRepository),
+        act: (cubit) => cubit.refreshForecast(locationId),
+        verify: (_) => verify(
+          () => weatherRepository.forecastForLocation(locationId),
+        ).called(1),
+      );
+
+      blocTest<ForecastCubit, ForecastState>(
+        'emits loading, success when refresh succeeds',
+        build: () => ForecastCubit(weatherRepository),
+        act: (cubit) => cubit.refreshForecast(locationId),
+        expect: () => <ForecastState>[
+          ForecastState.loading(true),
+          ForecastState.success(forecast, true),
         ],
       );
     });

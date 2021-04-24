@@ -47,7 +47,11 @@ class WeatherRepository {
               .toList() ??
           [];
 
-      return Forecast(response.title ?? '', weatherResponse);
+      return Forecast(
+        locationName: response.title ?? '',
+        weather: weatherResponse,
+        locationId: response.woeid ?? locationId,
+      );
     } catch (e) {
       throw ForecastForLocationException();
     }
