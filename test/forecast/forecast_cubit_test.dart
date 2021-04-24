@@ -61,5 +61,33 @@ void main() {
         ],
       );
     });
+
+    group('switch units', () {
+      final locationId = 1;
+      final date = DateTime.now();
+      final forecast = Forecast('Nyc', [
+        Weather(date, 10.0, 10.0, 10.0, 'Cloudy', 'C'),
+      ]);
+      final forecastFahrenheit = Forecast('Nyc', [
+        Weather(date, 50.0, 50.0, 50.0, 'Cloudy', 'C'),
+      ]);
+      late WeatherRepository weatherRepository;
+
+      setUp(() {
+        weatherRepository = MockWeatherRepository();
+        when(() => weatherRepository.forecastForLocation(locationId))
+            .thenAnswer((_) => Future.value(forecast));
+      });
+
+      blocTest<ForecastCubit, ForecastState>(
+        'invoke switchUnits on repository',
+        build: () => ForecastCubit(weatherRepository),
+        seed: () => ForecastState.success(forecast),
+        act: (cubit) => cubit.switchUnits(),
+        expect: () => <ForecastState>[
+          ForecastState.success(forecastFahrenheit),
+        ],
+      );
+    });
   });
 }

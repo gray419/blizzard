@@ -1,3 +1,4 @@
+import 'package:blizzard/extensions/double_extensions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:weather_repository/weather_repository.dart';
@@ -17,5 +18,33 @@ class ForecastCubit extends Cubit<ForecastState> {
     } catch (e) {
       emit(ForecastState.failure());
     }
+  }
+
+  Future<void> switchUnits() async {
+    final isCelsius = !state.isCelsius;
+    var convertedWeatherUnits = <Weather>[];
+    state.forecast.weather.forEach(
+      (element) {
+        convertedWeatherUnits.add(
+          element.copyWith(
+            temp: isCelsius
+                ? element.temp.toCelsius()
+                : element.temp.toFahrenheit(),
+            maxTemp: isCelsius
+                ? element.maxTemp.toCelsius()
+                : element.maxTemp.toFahrenheit(),
+            minTemp: isCelsius
+                ? element.minTemp.toCelsius()
+                : element.minTemp.toFahrenheit(),
+          ),
+        );
+      },
+    );
+    emit(
+      state.copyWith(
+        isCelsius: isCelsius,
+        forecast: Forecast(state.forecast.locationName, convertedWeatherUnits),
+      ),
+    );
   }
 }

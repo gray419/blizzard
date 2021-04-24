@@ -21,21 +21,21 @@ class TodaysWeather extends StatelessWidget {
           style: TextStyle(fontSize: 14),
         ),
         Text(
-          '${today.temp}\u00b0',
+          '${today.temp.round()}\u00b0',
           style: TextStyle(fontSize: 60),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'H:${today.maxTemp}\u00b0',
+              'H:${today.maxTemp.round()}\u00b0',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(
               width: 8,
             ),
             Text(
-              'L:${today.minTemp}\u00b0',
+              'L:${today.minTemp.round()}\u00b0',
               style: TextStyle(fontSize: 16),
             ),
           ],

@@ -22,6 +22,18 @@ class ForecastState extends Equatable {
 
   const ForecastState.failure() : this._(status: ForecastStatus.failure);
 
+  ForecastState copyWith({
+    ForecastStatus? status,
+    Forecast? forecast,
+    bool? isCelsius,
+  }) {
+    return ForecastState._(
+      status: status ?? this.status,
+      forecast: forecast ?? this.forecast,
+      isCelsius: isCelsius ?? this.isCelsius,
+    );
+  }
+
   @override
   List<Object> get props => [status, forecast];
 }
