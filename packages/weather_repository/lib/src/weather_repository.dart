@@ -38,9 +38,9 @@ class WeatherRepository {
       final List<Weather> weatherResponse = response.consolidatedWeather
               ?.map((weatherData) => Weather(
                     DateTime.parse(weatherData.applicableDate ?? ''),
-                    weatherData.theTemp ?? 0.0,
-                    weatherData.maxTemp ?? 0.0,
-                    weatherData.minTemp ?? 0.0,
+                    weatherData.theTemp?.round() ?? 0,
+                    weatherData.maxTemp?.round() ?? 0,
+                    weatherData.minTemp?.round() ?? 0,
                     weatherData.weatherStateName ?? '',
                     weatherData.weatherStateAbbr ?? '',
                   ))
