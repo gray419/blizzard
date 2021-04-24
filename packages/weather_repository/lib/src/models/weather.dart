@@ -1,8 +1,8 @@
 class Weather {
   final DateTime date;
-  final double temp;
-  final double maxTemp;
-  final double minTemp;
+  final int temp;
+  final int maxTemp;
+  final int minTemp;
   final String weatherState;
   final String weatherStateAbbr;
 

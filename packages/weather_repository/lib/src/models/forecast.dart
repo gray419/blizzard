@@ -4,5 +4,5 @@ class Forecast {
   final String locationName;
   final List<Weather> weather;
 
-  Forecast(this.locationName, this.weather);
+  const Forecast(this.locationName, this.weather);
 }
