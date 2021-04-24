@@ -30,7 +30,7 @@ class WeatherRepository {
     }
   }
 
-  Future<Forecast> forecastForLocation(int locationId) async {
+  Future<Forecast> forecastForLocation({required int locationId}) async {
     try {
       final response =
           await _metaWeatherService.forecastForLocation(locationId);
