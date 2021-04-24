@@ -1,5 +1,4 @@
 import 'package:blizzard/forecast/view/forecast_page.dart';
-import 'package:blizzard/search/bloc/search_cubit.dart';
 import 'package:blizzard/search/view/search_page.dart';
 import 'package:blizzard/search/widgets/search_results.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +16,8 @@ void main() {
     final term = 'nyc';
     final location = Location(1, ' New York');
     late WeatherRepository weatherRepository;
-    late SearchCubit searchCubit;
 
     setUp(() {
-      searchCubit = MockSearchCubit();
       weatherRepository = MockWeatherRepository();
       when(() => weatherRepository.searchForLocation(term: term))
           .thenAnswer((_) => Future.value([location]));
