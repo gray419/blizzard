@@ -31,6 +31,16 @@ void main() {
     expect(location, Location(1, 'New York'));
   });
 
+  test('throws when searchForLocation fails', () async {
+    final exception = Exception('error');
+    when(() => weatherService.searchForLocation(searchTerm))
+        .thenThrow(exception);
+    expect(
+      () async => await weatherRepository.searchForLocation(term: searchTerm),
+      throwsA(exception),
+    );
+  });
+
   test('calls searchForLocation with city', () async {
     try {
       await weatherRepository.searchForLocation(term: searchTerm);
@@ -62,6 +72,29 @@ void main() {
         ),
       );
       weatherRepository = WeatherRepository(weatherService: weatherService);
+    });
+
+    test('calls forecastForLocation success', () async {
+      final forecast =
+          await weatherRepository.forecastForLocation(locationId: locationId);
+      expect(
+        forecast,
+        Forecast(
+            locationName: 'nyc',
+            weather: [Weather(date, 1, 1, 1, 'cloudy', 'c')],
+            locationId: 1),
+      );
+    });
+
+    test('throws when forecastForLocation fails', () async {
+      final exception = Exception('error');
+      when(() => weatherService.forecastForLocation(locationId))
+          .thenThrow(exception);
+      expect(
+        () async =>
+            await weatherRepository.forecastForLocation(locationId: locationId),
+        throwsA(exception),
+      );
     });
 
     test('calls forecastForLocation success', () async {
