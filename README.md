@@ -15,5 +15,7 @@ open -a simulator
 flutter run
 ```
 # Screenshots
-![Search](screenshots/search_page.png)
-![Forecast](screenshots/forecast_page.png)
+<p float="left">
+<img src="screenshots/search_page.png" width="400">
+<img src="screenshots/forecast_page.png" width="400">
+</p>
