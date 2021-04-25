@@ -7,11 +7,11 @@ A Weather app powered by the [Metaweather API](https://www.metaweather.com/api/)
 - Dart >= 2.12
 
 # Run
-- Open an iOS/Android simulator
 - In your terminal run:
 ```
 git clone git@github.com:gray419/blizzard.git
 cd blizzard
+open -a simulator
 flutter run
 ```
 # Screenshots
