@@ -92,6 +92,9 @@ void main() {
         when(() =>
                 weatherRepository.forecastForLocation(locationId: locationId))
             .thenAnswer((_) => Future.value(forecast));
+        when(() =>
+                weatherRepository.convertTemperature(forecast.weather, false))
+            .thenAnswer((_) => forecastFahrenheit.weather);
       });
 
       blocTest<ForecastCubit, ForecastState>(
