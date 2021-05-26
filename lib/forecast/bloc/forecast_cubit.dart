@@ -1,4 +1,3 @@
-import 'package:blizzard/extensions/double_extensions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:weather_repository/weather_repository.dart';
@@ -28,7 +27,8 @@ class ForecastCubit extends Cubit<ForecastState> {
           await _weatherRepository.forecastForLocation(locationId: locationId);
       final weather = state.isCelsius
           ? forecast.weather
-          : _convertTemperature(forecast.weather, state.isCelsius);
+          : _weatherRepository.convertTemperature(
+              forecast.weather, state.isCelsius);
       emit(
         ForecastState._(
           status: ForecastStatus.success,
@@ -46,8 +46,8 @@ class ForecastCubit extends Cubit<ForecastState> {
 
   Future<void> switchUnits() async {
     final isCelsius = !state.isCelsius;
-    final convertedWeatherUnits =
-        _convertTemperature(state.forecast.weather, isCelsius);
+    final convertedWeatherUnits = _weatherRepository.convertTemperature(
+        state.forecast.weather, isCelsius);
     emit(
       state.copyWith(
         isCelsius: isCelsius,
@@ -58,27 +58,5 @@ class ForecastCubit extends Cubit<ForecastState> {
         ),
       ),
     );
-  }
-
-  List<Weather> _convertTemperature(List<Weather> weather, bool isCelsius) {
-    var convertedWeatherUnits = <Weather>[];
-    weather.forEach(
-      (element) {
-        convertedWeatherUnits.add(
-          element.copyWith(
-            temp: isCelsius
-                ? element.temp.toCelsius()
-                : element.temp.toFahrenheit(),
-            maxTemp: isCelsius
-                ? element.maxTemp.toCelsius()
-                : element.maxTemp.toFahrenheit(),
-            minTemp: isCelsius
-                ? element.minTemp.toCelsius()
-                : element.minTemp.toFahrenheit(),
-          ),
-        );
-      },
-    );
-    return convertedWeatherUnits;
   }
 }
