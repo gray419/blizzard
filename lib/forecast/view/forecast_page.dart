@@ -28,7 +28,6 @@ class ForecastFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ForecastCubit, ForecastState>(
-      bloc: context.read<ForecastCubit>(),
       builder: (context, state) {
         switch (state.status) {
           case ForecastStatus.loading:

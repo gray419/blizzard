@@ -15,11 +15,9 @@ void main() {
   setUp(() {
     weatherService = MockWeatherService();
     when(() => weatherService.searchForLocation(searchTerm)).thenAnswer(
-      (_) async => metaweather.LocationResponse(
-        locations: [
-          metaweather.Location(title: 'New York', woeid: 1),
-        ],
-      ),
+      (_) async => [
+        metaweather.Location(title: 'New York', woeid: 1),
+      ],
     );
     weatherRepository = WeatherRepository(weatherService: weatherService);
   });

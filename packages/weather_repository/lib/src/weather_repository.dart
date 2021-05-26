@@ -15,7 +15,7 @@ class WeatherRepository {
 
     var locations = <Location>[];
 
-    locationResponse.locations?.forEach((element) {
+    locationResponse.forEach((element) {
       if (element.woeid != null && element.title != null) {
         locations.add(Location(element.woeid!, element.title!));
       }

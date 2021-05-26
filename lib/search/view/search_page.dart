@@ -45,7 +45,6 @@ class _SearchContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
-      bloc: context.read<SearchCubit>(),
       builder: (context, state) {
         switch (state.status) {
           case SearchStatus.loading:
