@@ -1,5 +1,5 @@
-import 'package:blizzard/extensions/double_extensions.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
+import 'package:weather_repository/src/extensions/double_extensions.dart';
 
 void main() {
   test('test toFahrenheit', () {

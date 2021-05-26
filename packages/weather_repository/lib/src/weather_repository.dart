@@ -4,6 +4,8 @@ import 'package:metaweather_api/metaweather_api.dart';
 import 'package:weather_repository/src/models/location.dart';
 import 'package:weather_repository/src/models/models.dart';
 
+import 'extensions/double_extensions.dart';
+
 class WeatherRepository {
   final WeatherService _metaWeatherService;
 
@@ -44,5 +46,27 @@ class WeatherRepository {
       weather: weatherResponse,
       locationId: response.woeid ?? locationId,
     );
+  }
+
+  List<Weather> convertTemperature(List<Weather> weather, bool isCelsius) {
+    var convertedWeatherUnits = <Weather>[];
+    weather.forEach(
+      (element) {
+        convertedWeatherUnits.add(
+          element.copyWith(
+            temp: isCelsius
+                ? element.temp.toCelsius()
+                : element.temp.toFahrenheit(),
+            maxTemp: isCelsius
+                ? element.maxTemp.toCelsius()
+                : element.maxTemp.toFahrenheit(),
+            minTemp: isCelsius
+                ? element.minTemp.toCelsius()
+                : element.minTemp.toFahrenheit(),
+          ),
+        );
+      },
+    );
+    return convertedWeatherUnits;
   }
 }
