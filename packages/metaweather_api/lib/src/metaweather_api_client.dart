@@ -14,7 +14,7 @@ class MetaWeatherApiClient extends WeatherService {
   final _baseUrl = 'www.metaweather.com';
 
   @override
-  Future<LocationResponse> searchForLocation(String term) async {
+  Future<List<Location>> searchForLocation(String term) async {
     final queryParams = <String, String>{'query': term};
     final url = Uri.https(_baseUrl, '/api/location/search', queryParams);
 
@@ -24,7 +24,14 @@ class MetaWeatherApiClient extends WeatherService {
     }
     final List<dynamic> body = jsonDecode(response.body);
 
-    return LocationResponse.fromJson(body);
+    final locations = <Location>[];
+
+    body.forEach((element) {
+      final location = Location.fromJson(element);
+      locations.add(location);
+    });
+
+    return locations;
   }
 
   @override

@@ -7,8 +7,8 @@ void main() async {
 
   try {
     final locations = await metaWeatherApiClient.searchForLocation('New York');
-    print('${locations.locations?.first.title ?? 'no match'}');
-    print('${locations.locations?.first.woeid ?? 'no match'}');
+    print('${locations.first.title ?? 'no match'}');
+    print('${locations.first.woeid ?? 'no match'}');
   } on Exception catch (e) {
     print(e);
   }

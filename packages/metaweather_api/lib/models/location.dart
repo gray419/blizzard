@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'location.g.dart';
+
+@JsonSerializable()
 class Location {
   String? title;
   String? locationType;
@@ -6,19 +11,8 @@ class Location {
 
   Location({this.title, this.locationType, this.woeid, this.lattLong});
 
-  Location.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
-    locationType = json['location_type'];
-    woeid = json['woeid'];
-    lattLong = json['latt_long'];
-  }
+  factory Location.fromJson(Map<String, dynamic> json) =>
+      _$LocationFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['location_type'] = this.locationType;
-    data['woeid'] = this.woeid;
-    data['latt_long'] = this.lattLong;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$LocationToJson(this);
 }
