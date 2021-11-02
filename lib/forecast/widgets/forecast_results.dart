@@ -12,9 +12,7 @@ class ForecastResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.separated(
-        separatorBuilder: (context, index) => Divider(
-          color: Colors.black,
-        ),
+        separatorBuilder: (context, index) => Divider(color: Colors.black),
         itemCount: forecast.weather.length - 1,
         itemBuilder: (context, index) => _ForecastResult(
           weather: forecast.weather[index + 1],
