@@ -50,7 +50,9 @@ void main() {
     group('errors', () {
       setUp(() {
         weatherRepository = MockWeatherRepository();
-        when(() => weatherRepository.forecastForLocation(locationId: locationId)).thenThrow((_) => Exception('error'));
+        when(() =>
+                weatherRepository.forecastForLocation(locationId: locationId))
+            .thenThrow((_) => Exception('error'));
       });
 
       testWidgets('renders ForecastPage error view', (tester) async {

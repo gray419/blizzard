@@ -29,7 +29,8 @@ class _ForecastResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.network('https://www.metaweather.com/static/img/weather/png/${weather.weatherStateAbbr}.png'),
+      leading: Image.network(
+          'https://www.metaweather.com/static/img/weather/png/${weather.weatherStateAbbr}.png'),
       title: Text(DateFormat('EEEE').format(weather.date)),
       subtitle: Text(weather.weatherState),
       trailing: Row(

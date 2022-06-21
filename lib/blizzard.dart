@@ -6,7 +6,8 @@ import 'package:weather_repository/weather_repository.dart';
 class BlizzardApp extends StatelessWidget {
   final WeatherRepository weatherRepository;
 
-  const BlizzardApp({Key? key, required this.weatherRepository}) : super(key: key);
+  const BlizzardApp({Key? key, required this.weatherRepository})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
