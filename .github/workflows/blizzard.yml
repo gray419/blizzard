@@ -10,6 +10,8 @@ jobs:
       - uses: subosito/flutter-action@v2
       - name: Install Dependencies
         run: flutter packages get
+      - name: Generate Files
+        run: flutter pub run build_runner build --delete-conflicting-
       - name: Format
         run: flutter format --set-exit-if-changed lib test
       - name: Analyze
