@@ -2,7 +2,7 @@
 
 A Weather app powered by the [Metaweather API](https://www.metaweather.com/api/).
 
-## Requirements
+## Requirementss
 
 - Flutter >= 2.0
 - Dart >= 2.12
